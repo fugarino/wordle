@@ -15294,6 +15294,10 @@ const dictionary = [
 // Selectors
 const WORD_LENGTH = 5;
 const guessGrid = document.querySelector("[data-guess-grid]");
+const offsetFromDate = new Date(2022, 0, 1);
+const msOffset = Date.now() - offsetFromDate;
+const dayOffset = msOffset / 1000 / 60 / 60 / 24;
+const targetWord = "";
 
 // On Load
 startInteraction();
@@ -15356,6 +15360,15 @@ function deleteKey() {
   lastTile.textContent = "";
   delete lastTile.dataset.state;
   delete lastTile.dataset.letter;
+}
+
+function submitGuess() {
+  const activeTiles = [...getActiveTiles()];
+  if (activeTiles.length !== WORD_LENGTH) {
+    showAlert("Not enough letters");
+    shakeTiles(activeTiles);
+    return;
+  }
 }
 
 function getActiveTiles() {
